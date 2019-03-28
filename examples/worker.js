@@ -11,8 +11,12 @@ self.onmessage = (event) => {
     .then((response) => response.arrayBuffer())
     .then((wav) => {
       fdkAac(new Uint8Array(wav), function (err, aac) {
-        const blob = new File([aac.buffer], 'test.aac', {type: 'audio/aac'})
-        self.postMessage(URL.createObjectURL(blob))
+        if (err) return console.error(err)
+        const file = ('File' in self)
+          ? new File([aac.buffer], 'test.aac', {type: 'audio/aac'})
+          // Safari does not have File in workers
+          : new Blob([aac.buffer], {type: 'audio/aac'})
+        self.postMessage(URL.createObjectURL(file))
       })
     })    
 }
