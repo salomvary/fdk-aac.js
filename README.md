@@ -6,6 +6,10 @@ with unclear license situation.
 This projects ports the Fraunhofer FDK AAC encoder to JavaScript using the
 [Emscripten project](https://github.com/kripken/emscripten). Works in modern browsers and in Node.js.
 
+## Demo
+
+A very simple [demo is available here](https://salomvary.com/fdk-aac.js/examples/).
+
 ## Builds
 
 - `fdk-aac.js`: use this from Node, Browserify, Webpack
