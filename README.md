@@ -15,6 +15,19 @@ This projects ports the Fraunhofer FDK AAC encoder to JavaScript using the
 
 See [the example command line utility](bin/encode-aac) and the [example web worker](examples/worker.js).
 
+```js
+fetch(url)
+    .then((response) => response.arrayBuffer())
+    .then((wav) => {
+        fdkAac(new Uint8Array(wav), function (err, aac) {
+            if (err) return console.error(err)
+            const file = new File([aac.buffer], 'test.aac', {type: 'audio/aac'})
+            const url = URL.createObjectURL(file)
+            // Do something with the file or the url, for example:
+            document.querySelector('audio').src = url
+        })
+    })
+```
 
 ## Credits
 
