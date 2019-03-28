@@ -1,7 +1,6 @@
 # Port of Fraunhofer FDK AAC with Emscripten
 
-**WARNING:** This is an experimental library not tested for production and
-with unclear license situation.
+**WARNING:** This is an experimental library not tested for production.
 
 This projects ports the Fraunhofer FDK AAC encoder to JavaScript using the
 [Emscripten project](https://github.com/kripken/emscripten). Works in modern browsers and in Node.js.
