@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+const aac = require('../fdk-aac')
+const fs = require('fs')
+
+const input = new Uint8Array(fs.readFileSync(process.argv[2]))
+
+aac(input, function (err, aac) {
+  if (err) {
+    console.err(err)
+    process.exit(1)
+  }
+  fs.writeFileSync(process.argv[3], aac)
+})

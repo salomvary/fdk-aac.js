@@ -1,0 +1,25 @@
+{
+  "name": "fdk-aac",
+  "version": "0.0.1",
+  "description": "Port of Fraunhofer FDK AAC with Emscripten",
+  "main": "fdk-aac.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/test.js",
+    "lint": "eslint ."
+  },
+  "license": "It's complicated",
+  "keywords": [
+    "asm.js",
+    "aac",
+    "webassembly"
+  ],
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "chai": "^4.2.0",
+    "eslint": "^5.15.3",
+    "mocha": "^6.0.2"
+  }
+}
