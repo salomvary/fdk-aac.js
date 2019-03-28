@@ -1,7 +1,7 @@
 /* global fdkAac */
 /* eslint-env worker */
 
-self.fdkAacWasm = '/aac-enc.wasm'
+self.fdkAacWasm = '../aac-enc.wasm'
 
 importScripts('../fdk-aac.umd.js')
 
