@@ -1,58 +1,39 @@
-const Module = require('./aac-enc')
-
-/**
- * @callback aacCallback
- * @param {Error=} error
- * @param {Uint8Array=} aac
- */
-
-/** 
- * @param {Uint8Array} wav
- * @param {aacCallback} callback
- */
-module.exports = function aac (wav, callback) {
-  whenInitialized(function () {
-    callMain(wav, callback)
-  })
-}
-
-let callsWaiting = []
-
-let whenInitialized = function whenInitialized (call) {
-  callsWaiting.push(call)
-}
-
-Module.onRuntimeInitialized = function () {
-  let call
-  while ((call = callsWaiting.shift())) {
-    call()
-  }
-  callsWaiting = null
-  whenInitialized = function whenInitialized (call) {
-    call()
-  }
-}
+const AacEnc = require('./aac-enc')
 
 let lastError
 
-Module.quit = function (status, throwable) {
-  lastError = throwable
+/**
+ * @param {Uint8Array} wav
+ * @returns {Promise.<Uint8Array>} aac
+ */
+module.exports = function aac (wav) {
+  const ModuleOptions = {
+    quit (status, throwable) {
+      lastError = throwable
+    }
+  }
+
+  // Emscripten's Module.then is not a fully compliant "thenable" and
+  // does not allow value chanining
+  return new Promise(function (resolve) {
+    AacEnc(ModuleOptions).then(function (Module) {
+      // FIXME this for some reason synchronously throws
+      // instead of rejecting the promise in Node.js
+      resolve(callMain(Module, wav))
+    })
+  })
 }
 
-function callMain (input, callback) {
+function callMain (Module, input) {
   lastError = null
-
   try {
     Module.FS.writeFile('input.wav', input)
     Module.callMain(['input.wav', 'output.aac'])
     if (lastError) {
-      callback(lastError)
+      throw new Error(lastError)
     } else {
-      const aac = Module.FS.readFile('output.aac')
-      callback(null, aac)
+      return Module.FS.readFile('output.aac')
     }
-  } catch (e) {
-    callback(e)
   } finally {
     Module.FS.unlink('input.wav')
     Module.FS.unlink('output.aac')
