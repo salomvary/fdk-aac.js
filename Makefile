@@ -18,7 +18,7 @@ build/fdk-aac/configure:
 build/fdk-aac/.libs/aac-enc.bc: build/fdk-aac/configure
 	cd build/fdk-aac && \
 	emconfigure ./configure --enable-example  && \
-	emmake make &&
+	emmake make && \
 	cp .libs/aac-enc .libs/aac-enc.bc
 
 aac-enc.js: $(AAC_ENC_BC) $(PRE_JS) $(POST_JS)
