@@ -33,24 +33,12 @@ Module.onRuntimeInitialized = function () {
   }
 }
 
-let lastError
-
-Module.quit = function (status, throwable) {
-  lastError = throwable
-}
-
 function callMain (input, callback) {
-  lastError = null
-
   try {
     Module.FS.writeFile('input.wav', input)
     Module.callMain(['input.wav', 'output.aac'])
-    if (lastError) {
-      callback(lastError)
-    } else {
-      const aac = Module.FS.readFile('output.aac')
-      callback(null, aac)
-    }
+    const aac = Module.FS.readFile('output.aac')
+    callback(null, aac)
   } catch (e) {
     callback(e)
   } finally {
