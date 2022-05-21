@@ -20,7 +20,7 @@ build/fdk-aac/.libs/libfdk-aac.a: build/fdk-aac/configure
 
 aac-enc.js: $(AAC_ENC_OBJS) $(AAC_ENC_SHARED_DEPS) $(PRE_JS) $(POST_JS)
 	emcc $(AAC_ENC_OBJS) $(AAC_ENC_SHARED_DEPS) \
-		--closure 1 -O3 \
+		-O3 \
 		-s INVOKE_RUN=0 \
 		-s EXPORTED_RUNTIME_METHODS=callMain,FS \
 		--pre-js $(PRE_JS) \
