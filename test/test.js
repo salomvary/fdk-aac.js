@@ -24,7 +24,6 @@ describe('fdk-aac', function() {
     aac(new Uint8Array(), function (err) {
       try {
         expect(err).to.be.an.instanceof(Error)
-        expect(err.status).to.eql(1)
         done()
       } catch (e) {
         done(e)
